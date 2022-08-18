@@ -30,7 +30,6 @@ import ru.ckateptb.abilityslots.ability.sequence.Sequence;
 import ru.ckateptb.abilityslots.config.AbilitySlotsConfig;
 import ru.ckateptb.abilityslots.event.AbilitySlotsReloadEvent;
 import ru.ckateptb.abilityslots.user.AbilityUser;
-import ru.ckateptb.tablecloth.ioc.annotation.Autowired;
 import ru.ckateptb.tablecloth.ioc.annotation.Component;
 
 import java.lang.annotation.Annotation;
@@ -63,13 +62,7 @@ public class AbilitySequenceService implements Listener {
         AbilityAction abilityAction = this.createAbilityAction(information, sequenceAction);
         List<AbilityAction> actions = userActions.getOrDefault(user, new ArrayList<>());
         // In 1.17.1 PlayerAnimationEvent call multiple (its crutch but can fix it)
-        if (!actions.isEmpty() && (sequenceAction == SequenceAction.LEFT_CLICK_BLOCK
-                || sequenceAction == SequenceAction.LEFT_CLICK_ENTITY
-                || sequenceAction == SequenceAction.LEFT_CLICK)
-                && sequenceAction == actions.get(actions.size() - 1).action()
-                && information.getAbilityClass() == actions.get(actions.size() - 1).ability()) {
-            return ActivateResult.NOT_ACTIVATE;
-        }
+        
         actions.add(abilityAction);
         if (config.isSequenceDebug()) {
             user.getEntity().sendMessage(String.format("%s > %s", abilityAction.ability().getSimpleName(), abilityAction.action().name()));

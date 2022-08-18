@@ -66,7 +66,8 @@ public final class AbilityHandler implements Listener {
         if (!(abilityUser instanceof PlayerAbilityUser user)
                 || ability == null
                 || !ability.isActivatedBy(method)
-                || !user.canActivate(ability)) return;
+                || !user.canActivate(ability)
+                || user.getEntity().hasMetadata("tablecloth:paralyze")) return;
         Ability instance = ability.createAbility();
         instance.setUser(user);
         ActivateResult activateResult = instance.activate(method);
